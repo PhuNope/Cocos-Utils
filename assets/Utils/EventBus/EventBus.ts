@@ -1,5 +1,5 @@
-import { IEventBinding } from "db://assets/EventBus/EventBinding";
-import { IEvent } from "db://assets/EventBus/Events";
+import { IEventBinding } from "./EventBinding";
+import { IEvent } from "./Events";
 
 export class EventBus<T extends IEvent> {
     private static bindings = new Map<string, Set<IEventBinding<any>>>();

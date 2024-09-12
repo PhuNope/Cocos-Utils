@@ -1,4 +1,4 @@
-import { IEvent } from "db://assets/EventBus/Events";
+import { IEvent } from "./Events";
 
 export interface IEventBinding<T extends IEvent> {
     onEvent?: (event: T) => void;

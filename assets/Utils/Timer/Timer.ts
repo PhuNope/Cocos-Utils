@@ -1,4 +1,4 @@
-import { CocosEvent } from "../CocosEvent";
+import { CocosEvent } from "../CocosEvent/CocosEvent";
 
 export namespace Timer {
     abstract class Timer {

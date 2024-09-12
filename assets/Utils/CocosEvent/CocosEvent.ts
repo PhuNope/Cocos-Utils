@@ -1,37 +1,19 @@
-import { _decorator, Component, Node } from 'cc';
-const { ccclass, property } = _decorator;
+import { EventTarget } from "cc";
 
+export class CocosEvent<TCallback extends (...args: any[]) => any = () => void> {
+    private _eventTarget = new EventTarget();
 
-export class CocosEvent<T extends (...args: unknown[]) => void> {
-    private data: Awaited<T>[];
-
-    constructor() {
-        this.data = [];
-    }
-
-    public readonly Add = (event: Awaited<T>) => {
-        this.data.push(event);
+    public readonly Add = (callback: TCallback, thisArg: any) => {
+        this._eventTarget.on('', callback, thisArg);
     };
 
-    public readonly DeleteEvent = (event: Awaited<T>) => {
-        const index = this.data.indexOf(event);
-        if (index !== -1) {
-            this.data.splice(index, 1);
-        }
+    public readonly DeleteEvent = (callback: TCallback, thisArg: any) => {
+        this._eventTarget.off('', callback, thisArg);
     };
 
-    public readonly Invoke = async (...params: Parameters<T>) => {
-        if (this.data.length === 0) {
-            return;
-        }
-
-        await Promise.all(this.data.map(value => value(...params)));
+    public readonly Invoke = (...args: Parameters<TCallback>) => {
+        this._eventTarget.emit('', ...args);
     };
-
-    // return {
-    //     Data: data,
-    //     Invoke: invoke,
-    //     add: add,
-    //     delete: deleteEvent
-    // };
 }
+
+
